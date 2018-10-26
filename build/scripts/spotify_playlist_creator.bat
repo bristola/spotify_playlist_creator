@@ -63,7 +63,7 @@ set CMD_LINE_ARGS=%*
 :execute
 @rem Setup the command line
 
-set CLASSPATH=%APP_HOME%\lib\spotify_playlist_creator.jar;%APP_HOME%\lib\guava-23.0.jar;%APP_HOME%\lib\jsr305-1.3.9.jar;%APP_HOME%\lib\error_prone_annotations-2.0.18.jar;%APP_HOME%\lib\j2objc-annotations-1.1.jar;%APP_HOME%\lib\animal-sniffer-annotations-1.14.jar
+set CLASSPATH=%APP_HOME%\lib\spotify_playlist_creator.jar;%APP_HOME%\lib\guava-23.0.jar;%APP_HOME%\lib\spotify-web-api-java-2.1.1.jar;%APP_HOME%\lib\jsr305-1.3.9.jar;%APP_HOME%\lib\error_prone_annotations-2.0.18.jar;%APP_HOME%\lib\j2objc-annotations-1.1.jar;%APP_HOME%\lib\animal-sniffer-annotations-1.14.jar;%APP_HOME%\lib\gson-2.8.5.jar;%APP_HOME%\lib\nv-i18n-1.23.jar;%APP_HOME%\lib\httpclient-cache-4.5.5.jar;%APP_HOME%\lib\httpclient-4.5.5.jar;%APP_HOME%\lib\commons-logging-1.2.jar;%APP_HOME%\lib\httpcore-4.4.9.jar;%APP_HOME%\lib\commons-codec-1.10.jar
 
 @rem Execute spotify_playlist_creator
 "%JAVA_EXE%" %DEFAULT_JVM_OPTS% %JAVA_OPTS% %SPOTIFY_PLAYLIST_CREATOR_OPTS%  -classpath "%CLASSPATH%" App %CMD_LINE_ARGS%

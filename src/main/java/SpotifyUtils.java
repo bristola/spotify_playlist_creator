@@ -1,12 +1,31 @@
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
-import com.wrapper.spotify.model_objects.specification.Paging;
-import com.wrapper.spotify.model_objects.specification.PlaylistSimplified;
-import com.wrapper.spotify.requests.data.playlists.GetListOfCurrentUsersPlaylistsRequest;
+import com.wrapper.spotify.model_objects.credentials.ClientCredentials;
+import com.wrapper.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
 
 public class SpotifyUtils {
 
-    public static void main(String[] args) {
+    public String getAccessToken(String clientId, String clientSecret) {
+
+        try {
+
+            SpotifyApi spotifyApi = new SpotifyApi.Builder()
+                .setClientId(clientId)
+                .setClientSecret(clientSecret)
+                .build();
+
+            ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials()
+                .build();
+
+            ClientCredentials clientCredentials = clientCredentialsRequest.execute();
+
+            return clientCredentials.getAccessToken();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
 
     }
 
