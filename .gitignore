@@ -1,1 +1,5 @@
 spotify_settings.txt
+.gradletasknamecache
+.gradle/
+build/
+bin/
