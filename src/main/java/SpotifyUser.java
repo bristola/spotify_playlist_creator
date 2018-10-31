@@ -73,7 +73,14 @@ public class SpotifyUser {
                 for (int j = 0; j < artists.length; j++) {
                     artists[j] = a_simp[j].getName();
                 }
-                Song s = new Song(track.getName(), artists, getGenres(a_simp), track.getId(), track.getPopularity(), track.getAlbum().getName());
+                Song s = new Song(
+                    track.getName(),
+                    artists,
+                    getGenres(a_simp),
+                    track.getId(),
+                    track.getPopularity(),
+                    track.getAlbum().getName()
+                );
                 out_tracks[i] = s;
             }
 
