@@ -34,17 +34,13 @@ public class App {
             Song[] tracks = user.getTracksFromPlaylist(playlist);
             for (Song track : tracks) {
                 System.out.println("\t"+track.getName());
-                for (String genre: track.getGenres()) {
-                    System.out.println("\t\t"+genre);
-                }
+                System.out.println("\t\t"+track.getPopularity());
             }
         }
-
     }
 
     public void setup() {
         su = new SpotifyUtils();
-
         try {
             String clientId = su.getClientID();
             String clientSecret = su.getClientSecret();

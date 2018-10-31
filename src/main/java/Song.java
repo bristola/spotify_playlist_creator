@@ -1,15 +1,19 @@
 public class Song {
 
-    private String name;
-    private String[] artists;
-    private String[] genres;
-    private String id;
+    private final String name;
+    private final String[] artists;
+    private final String[] genres;
+    private final String id;
+    private final Integer popularity;
+    private final String album;
 
-    public Song(String name, String[] artists, String[] genres, String id) {
+    public Song(String name, String[] artists, String[] genres, String id, Integer popularity, String album) {
         this.name = name;
         this.artists = artists;
         this.genres = genres;
         this.id = id;
+        this.popularity = popularity;
+        this.album = album;
     }
 
     public String getName() {
@@ -28,20 +32,12 @@ public class Song {
         return id;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public Integer getPopularity() {
+        return popularity;
     }
 
-    public void setArtist(String[] artists) {
-        this.artists = artists;
-    }
-
-    public void setGenres(String[] genres) {
-        this.genres = genres;
-    }
-
-    public void setID(String id) {
-        this.id = id;
+    public String getAlbum() {
+        return album;
     }
 
 }
