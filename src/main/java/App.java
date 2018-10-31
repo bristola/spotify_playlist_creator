@@ -5,55 +5,41 @@
 import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+import java.util.ArrayList;
 
 public class App {
 
-    public static void main(String[] args) {
+    private SpotifyUtils su;
+    private SpotifyUser user;
 
-        String clientID = "";
-        String clientSecret = "";
+    public static void main(String[] args) {
+        App a = new App();
+        a.run();
+    }
+
+    public void run() {
+        setup();
+        List<String> playlists = user.getUserPlaylists();
+        for (String playlist : playlists) {
+            System.out.println(playlist);
+        }
+    }
+
+    public void setup() {
+        su = new SpotifyUtils();
 
         try {
-            clientID = getClientID();
-            clientSecret = getClientSecret();
+            String clientId = su.getClientID();
+            String clientSecret = su.getClientSecret();
+            String userID = su.getUserID();
+            String accessToken = su.getAccessToken(clientId, clientSecret);
+            user = new SpotifyUser(clientId, clientSecret, userID, accessToken);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-        SpotifyUtils su = new SpotifyUtils();
-        String accessToken = su.getAccessToken(clientID, clientSecret);
-        System.out.println(accessToken);
-
-    }
-
-    public static String getClientID() throws IOException {
-        File f = new File("spotify_settings.txt");
-        Scanner scan = new Scanner(f);
-        while (scan.hasNext()) {
-            String[] lineArray = scan.nextLine().split(":");
-            if (lineArray.length != 2) {
-                continue;
-            } else if (lineArray[0].toLowerCase().trim().equals("client id")) {
-                return lineArray[1].trim();
-            }
-        }
-        return "";
-    }
-
-    public static String getClientSecret() throws IOException {
-        File f = new File("spotify_settings.txt");
-        Scanner scan = new Scanner(f);
-        while (scan.hasNext()) {
-            String[] lineArray = scan.nextLine().split(":");
-            if (lineArray.length != 2) {
-                continue;
-            } else if (lineArray[0].toLowerCase().trim().equals("client secret")) {
-                return lineArray[1].trim();
-            }
-        }
-        return "";
     }
 
 }
