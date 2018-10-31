@@ -31,9 +31,12 @@ public class App {
         PlaylistSimplified[] playlists = user.getUserPlaylists();
         for (PlaylistSimplified playlist : playlists) {
             System.out.println("Tracks on "+playlist.getName());
-            Track[] tracks = user.getTracksFromPlaylist(playlist);
-            for (Track track : tracks) {
-                System.out.println("\t"+track.getPreviewUrl());
+            Song[] tracks = user.getTracksFromPlaylist(playlist);
+            for (Song track : tracks) {
+                System.out.println("\t"+track.getName());
+                for (String genre: track.getGenres()) {
+                    System.out.println("\t\t"+genre);
+                }
             }
         }
 

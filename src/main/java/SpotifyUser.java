@@ -6,11 +6,15 @@ import com.wrapper.spotify.requests.data.playlists.GetListOfUsersPlaylistsReques
 import com.wrapper.spotify.model_objects.specification.PlaylistTrack;
 import com.wrapper.spotify.requests.data.playlists.GetPlaylistsTracksRequest;
 import com.wrapper.spotify.model_objects.specification.Track;
+import com.wrapper.spotify.model_objects.specification.ArtistSimplified;
+import com.wrapper.spotify.model_objects.specification.Artist;
+import com.wrapper.spotify.requests.data.artists.GetArtistRequest;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class SpotifyUser {
 
@@ -50,7 +54,7 @@ public class SpotifyUser {
 
     }
 
-    public Track[] getTracksFromPlaylist(PlaylistSimplified p) {
+    public Song[] getTracksFromPlaylist(PlaylistSimplified p) {
         try {
             GetPlaylistsTracksRequest getPlaylistsTracksRequest = api
                 .getPlaylistsTracks(p.getId())
@@ -60,10 +64,17 @@ public class SpotifyUser {
             Paging<PlaylistTrack> playlistTrackPaging = getPlaylistsTracksRequest.execute();
             PlaylistTrack[] tracks = playlistTrackPaging.getItems();
 
-            Track[] out_tracks = new Track[tracks.length];
+            Song[] out_tracks = new Song[tracks.length];
 
             for (int i = 0; i < tracks.length; i++) {
-                out_tracks[i] = tracks[i].getTrack();
+                Track track = tracks[i].getTrack();
+                ArtistSimplified[] a_simp = track.getArtists();
+                String[] artists = new String[a_simp.length];
+                for (int j = 0; j < artists.length; j++) {
+                    artists[j] = a_simp[j].getName();
+                }
+                Song s = new Song(track.getName(), artists, getGenres(a_simp), track.getId());
+                out_tracks[i] = s;
             }
 
             return out_tracks;
@@ -74,6 +85,24 @@ public class SpotifyUser {
 
         return null;
 
+    }
+
+    public String[] getGenres(ArtistSimplified[] artists) throws IOException, SpotifyWebApiException {
+        Artist[] a = new Artist[artists.length];
+        for (int i = 0; i < a.length; i++) {
+            String id = artists[i].getId();
+            GetArtistRequest getArtistRequest = api.getArtist(id)
+                .build();
+            Artist artist = getArtistRequest.execute();
+            a[i] = artist;
+        }
+        List<String> genres = new ArrayList<String>();
+        for (Artist artist : a) {
+            genres.addAll(Arrays.asList(artist.getGenres()));
+        }
+        String[] genres_out = new String[genres.size()];
+        genres.toArray(genres_out);
+        return genres_out;
     }
 
 }
