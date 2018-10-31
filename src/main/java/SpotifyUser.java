@@ -3,6 +3,9 @@ import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.specification.Paging;
 import com.wrapper.spotify.model_objects.specification.PlaylistSimplified;
 import com.wrapper.spotify.requests.data.playlists.GetListOfUsersPlaylistsRequest;
+import com.wrapper.spotify.model_objects.specification.PlaylistTrack;
+import com.wrapper.spotify.requests.data.playlists.GetPlaylistsTracksRequest;
+import com.wrapper.spotify.model_objects.specification.Track;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -27,24 +30,43 @@ public class SpotifyUser {
             .build();
     }
 
-    public List<String> getUserPlaylists() {
+    public PlaylistSimplified[] getUserPlaylists() {
         try {
             GetListOfUsersPlaylistsRequest getListOfUsersPlaylistsRequest = api
                 .getListOfUsersPlaylists(userID)
-                .limit(10)
                 .offset(0)
                 .build();
 
             Paging<PlaylistSimplified> playlistSimplifiedPaging = getListOfUsersPlaylistsRequest.execute();
             PlaylistSimplified[] playlists = playlistSimplifiedPaging.getItems();
 
-            List<String> str_playlists = new ArrayList<String>();
+            return playlists;
 
-            for (PlaylistSimplified playlist : playlists) {
-                str_playlists.add(playlist.getName());
+        } catch (IOException | SpotifyWebApiException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+
+        return null;
+
+    }
+
+    public Track[] getTracksFromPlaylist(PlaylistSimplified p) {
+        try {
+            GetPlaylistsTracksRequest getPlaylistsTracksRequest = api
+                .getPlaylistsTracks(p.getId())
+                .offset(0)
+                .build();
+
+            Paging<PlaylistTrack> playlistTrackPaging = getPlaylistsTracksRequest.execute();
+            PlaylistTrack[] tracks = playlistTrackPaging.getItems();
+
+            Track[] out_tracks = new Track[tracks.length];
+
+            for (int i = 0; i < tracks.length; i++) {
+                out_tracks[i] = tracks[i].getTrack();
             }
 
-            return str_playlists;
+            return out_tracks;
 
         } catch (IOException | SpotifyWebApiException e) {
             System.out.println("Error: " + e.getMessage());
