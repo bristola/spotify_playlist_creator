@@ -28,28 +28,6 @@ public class App {
 
     public void run() {
         setup();
-        PlaylistSimplified[] playlists = user.getUserPlaylists();
-        for (PlaylistSimplified playlist : playlists) {
-            System.out.println("Tracks on "+playlist.getName());
-            List<Song> tracks = user.getTracksFromPlaylist(playlist);
-            for (Song track : tracks) {
-                System.out.println("\t"+track.getName());
-                for (String genre : track.getGenres()) {
-                    System.out.println("\t\t"+genre);
-                }
-            }
-        }
-        for (PlaylistSimplified playlist : playlists) {
-            System.out.println("Tracks on "+playlist.getName());
-            List<Song> tracks = user.getTracksFromPlaylist(playlist);
-            tracks = user.filterSongs(tracks, "soul", null, null, null, null);
-            for (Song track : tracks) {
-                System.out.println("\t"+track.getName());
-                for (String genre : track.getGenres()) {
-                    System.out.println("\t\t"+genre);
-                }
-            }
-        }
     }
 
     public void setup() {

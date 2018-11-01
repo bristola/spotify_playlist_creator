@@ -9,6 +9,8 @@ import com.wrapper.spotify.model_objects.specification.Track;
 import com.wrapper.spotify.model_objects.specification.ArtistSimplified;
 import com.wrapper.spotify.model_objects.specification.Artist;
 import com.wrapper.spotify.requests.data.artists.GetArtistRequest;
+import com.wrapper.spotify.model_objects.special.SnapshotResult;
+import com.wrapper.spotify.requests.data.playlists.AddTracksToPlaylistRequest;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -31,6 +33,8 @@ public class SpotifyUser {
         this.accessToken = accessToken;
         this.api = new SpotifyApi.Builder()
             .setAccessToken(accessToken)
+            .setClientId(clientId)
+            .setClientSecret(clientSecret)
             .build();
     }
 
@@ -79,7 +83,8 @@ public class SpotifyUser {
                     getGenres(a_simp),
                     track.getId(),
                     track.getPopularity(),
-                    track.getAlbum().getName()
+                    track.getAlbum().getName(),
+                    track.getUri()
                 );
                 out_tracks.add(s);
             }
@@ -131,6 +136,24 @@ public class SpotifyUser {
         }
 
         return playlist;
+    }
+
+    public void addSongsToPlaylist(String playlistID, List<Song> songs) {
+        String[] uris = new String[songs.size()];
+        for (int i = 0; i < uris.length; i++) {
+            uris[i] = songs.get(i).getURI();
+        }
+        AddTracksToPlaylistRequest addTracksToPlaylistRequest = api
+            .addTracksToPlaylist(playlistID, uris)
+            .position(0)
+            .build();
+
+        try {
+            SnapshotResult snapshotResult = addTracksToPlaylistRequest.execute();
+        } catch (IOException | SpotifyWebApiException e) {
+            System.out.println("Error: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
 }
