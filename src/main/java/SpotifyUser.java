@@ -54,7 +54,7 @@ public class SpotifyUser {
 
     }
 
-    public Song[] getTracksFromPlaylist(PlaylistSimplified p) {
+    public List<Song> getTracksFromPlaylist(PlaylistSimplified p) {
         try {
             GetPlaylistsTracksRequest getPlaylistsTracksRequest = api
                 .getPlaylistsTracks(p.getId())
@@ -64,7 +64,7 @@ public class SpotifyUser {
             Paging<PlaylistTrack> playlistTrackPaging = getPlaylistsTracksRequest.execute();
             PlaylistTrack[] tracks = playlistTrackPaging.getItems();
 
-            Song[] out_tracks = new Song[tracks.length];
+            List<Song> out_tracks = new ArrayList<Song>();
 
             for (int i = 0; i < tracks.length; i++) {
                 Track track = tracks[i].getTrack();
@@ -81,7 +81,7 @@ public class SpotifyUser {
                     track.getPopularity(),
                     track.getAlbum().getName()
                 );
-                out_tracks[i] = s;
+                out_tracks.add(s);
             }
 
             return out_tracks;
@@ -112,8 +112,25 @@ public class SpotifyUser {
         return genres_out;
     }
 
-    public List<Song> filterSongs() {
-        return null;
+    public List<Song> filterSongs(List<Song> songs, String genre, String artist, Integer popularityMin, Integer popularityMax, String album) {
+
+        List<Song> playlist = new ArrayList<Song>();
+
+        for (Song current : songs) {
+            if (genre != null && !Arrays.asList(current.getGenres()).contains(genre))
+                continue;
+            if (artist != null && !Arrays.asList(current.getArtists()).contains(artist))
+                continue;
+            if (popularityMin != null && current.getPopularity() < popularityMin)
+                continue;
+            if (popularityMax != null && current.getPopularity() > popularityMax)
+                continue;
+            if (album != null && !current.getAlbum().trim().equals(album.trim()))
+                continue;
+            playlist.add(current);
+        }
+
+        return playlist;
     }
 
 }
