@@ -26,6 +26,7 @@ public class SpotifyUser {
     private String accessToken;
     private final SpotifyApi api;
 
+    // Change this for new auth method. https://github.com/thelinmichael/spotify-web-api-java/blob/master/examples/authorization/authorization_code/AuthorizationCodeExample.java
     public SpotifyUser(String clientId, String clientSecret, String userID, String accessToken) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
