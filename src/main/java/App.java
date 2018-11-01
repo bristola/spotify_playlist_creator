@@ -37,7 +37,7 @@ public class App {
             String clientSecret = su.getClientSecret();
             String userID = su.getUserID();
             String accessToken = su.getAccessToken(clientId, clientSecret);
-            user = new SpotifyUser(clientId, clientSecret, userID, accessToken);
+            user = new SpotifyUser(clientId, clientSecret, userID);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {

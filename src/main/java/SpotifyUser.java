@@ -1,4 +1,5 @@
 import com.wrapper.spotify.SpotifyApi;
+import com.wrapper.spotify.SpotifyHttpManager;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.specification.Paging;
 import com.wrapper.spotify.model_objects.specification.PlaylistSimplified;
@@ -11,12 +12,17 @@ import com.wrapper.spotify.model_objects.specification.Artist;
 import com.wrapper.spotify.requests.data.artists.GetArtistRequest;
 import com.wrapper.spotify.model_objects.special.SnapshotResult;
 import com.wrapper.spotify.requests.data.playlists.AddTracksToPlaylistRequest;
+import com.wrapper.spotify.model_objects.credentials.AuthorizationCodeCredentials;
+import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
+import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
+import java.net.URI;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class SpotifyUser {
 
@@ -27,16 +33,39 @@ public class SpotifyUser {
     private final SpotifyApi api;
 
     // Change this for new auth method. https://github.com/thelinmichael/spotify-web-api-java/blob/master/examples/authorization/authorization_code/AuthorizationCodeExample.java
-    public SpotifyUser(String clientId, String clientSecret, String userID, String accessToken) {
+    public SpotifyUser(String clientId, String clientSecret, String userID) {
+        Scanner scan = new Scanner(System.in);
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.userID = userID;
-        this.accessToken = accessToken;
-        this.api = new SpotifyApi.Builder()
-            .setAccessToken(accessToken)
-            .setClientId(clientId)
+        // this.accessToken = accessToken;
+        URI redirectUri = SpotifyHttpManager.makeUri("https://example.com/spotify-redirect");
+        api = new SpotifyApi.Builder()
             .setClientSecret(clientSecret)
+            .setClientId(clientId)
+            .setRedirectUri(redirectUri)
             .build();
+        AuthorizationCodeUriRequest authorizationCodeUriRequest = api.authorizationCodeUri()
+            .state("x4xkmn9pu3j6ukrs8n")
+            .scope("playlist-read-private,playlist-modify-public,playlist-modify-private,playlist-read-collaborative")
+            .show_dialog(true)
+            .build();
+        URI uri = authorizationCodeUriRequest.execute();
+        System.out.println("URI: " + uri.toString());
+        System.out.println("Please enter the code: ");
+        String code = scan.nextLine();
+        System.out.println();
+        AuthorizationCodeRequest authorizationCodeRequest = api.authorizationCode(code.trim())
+            .build();
+        try {
+            AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeRequest.execute();
+            api.setAccessToken(authorizationCodeCredentials.getAccessToken());
+            api.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
+            System.out.println("Expires in: " + authorizationCodeCredentials.getExpiresIn());
+        } catch (IOException | SpotifyWebApiException e) {
+            System.out.println("Error has occured: " + e);
+            e.printStackTrace();
+        }
     }
 
     public PlaylistSimplified[] getUserPlaylists() {
