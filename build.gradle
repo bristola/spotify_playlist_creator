@@ -32,3 +32,7 @@ repositories {
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
 }
+
+run{
+    standardInput = System.in
+}
