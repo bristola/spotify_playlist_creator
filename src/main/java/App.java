@@ -21,10 +21,10 @@ public class App {
     private SpotifyUtils su;
     private SpotifyUser user;
 
-    public static void main(String[] args) {
-        App a = new App();
-        a.run();
-    }
+    // public static void main(String[] args) {
+    //     App a = new App();
+    //     a.run();
+    // }
 
     public void run() {
         setup();
