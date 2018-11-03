@@ -1,0 +1,7 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+    <h1>Welcome</h1>
+    <ul th:each="playlist : ${playlists}">
+        <li th:text="${playlist.name}"></li>
+    </ul>
+</html>

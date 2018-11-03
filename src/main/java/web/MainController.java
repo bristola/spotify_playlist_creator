@@ -1,10 +1,13 @@
 package web;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.wrapper.spotify.model_objects.specification.PlaylistSimplified;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
@@ -12,12 +15,17 @@ import java.util.List;
 import java.util.ArrayList;
 import spotify.*;
 
+// TODO: Change the index function to just render a template, but then when a
+// user clicks sign up, it will run a different mapping which will redirect to
+// the correct uri. This removes unnecessary computations when you load the
+// homepage.
+
 @ComponentScan
-@RestController
+@Controller
 public class MainController {
 
-    @RequestMapping("/")
-    public String index() {
+    @GetMapping("/")
+    public String index(Model model) {
 
         SpotifyUtils su = new SpotifyUtils();
         String uri = "";
@@ -31,11 +39,14 @@ public class MainController {
             e.printStackTrace();
         }
 
-        return "Welcome to the Spotify Playlist Creator! <a href='"+uri+"'>Login</a>";
+        model.addAttribute("uri", uri);
+
+        return "home";
     }
 
     @RequestMapping(value = "/playlistCreator")
-    public String getIdByValue(@RequestParam("code") String code){
+    public String getIdByValue(@RequestParam("code") String code, Model model){
+
         SpotifyUtils su = new SpotifyUtils();
         SpotifyUser user = null;
         String clientId = "";
@@ -49,12 +60,11 @@ public class MainController {
             e.printStackTrace();
         }
         SpotifyUser spotifyUser = new SpotifyUser(clientId, clientSecret, code);
-        String output = "<h2>Playlists</h2><ul>";
         PlaylistSimplified[] playlists = spotifyUser.getUserPlaylists();
-        for (PlaylistSimplified playlist : playlists) {
-            output = output + "<li>" + playlist.getName() + "</li>";
-        }
-        return output;
+
+        model.addAttribute("playlists", playlists);
+
+        return "playlistCreator";
     }
 
 }
