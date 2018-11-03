@@ -1,4 +1,4 @@
-package hello;
+package web;
 
 import java.util.Arrays;
 
@@ -9,6 +9,8 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
+// gradle build
+// java -jar build/libs/gs-spring-boot-0.1.0.jar
 // http://localhost:8080/
 
 @ComponentScan

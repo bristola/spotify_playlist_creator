@@ -1,3 +1,5 @@
+package spotify;
+
 /**
     This is the drive class for starting up the program
 **/
@@ -36,7 +38,7 @@ public class App {
             String clientId = su.getClientID();
             String clientSecret = su.getClientSecret();
             String userID = su.getUserID();
-            String accessToken = su.getAccessToken(clientId, clientSecret);
+            // String accessToken = su.getAccessToken(clientId, clientSecret);
             user = new SpotifyUser(clientId, clientSecret, userID);
         } catch (IOException e) {
             e.printStackTrace();

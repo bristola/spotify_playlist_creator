@@ -1,3 +1,5 @@
+package spotify;
+
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.SpotifyHttpManager;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
@@ -15,6 +17,8 @@ import com.wrapper.spotify.requests.data.playlists.AddTracksToPlaylistRequest;
 import com.wrapper.spotify.model_objects.credentials.AuthorizationCodeCredentials;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
+import com.wrapper.spotify.model_objects.specification.User;
+import com.wrapper.spotify.requests.data.users_profile.GetCurrentUsersProfileRequest;
 import java.net.URI;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -32,38 +36,31 @@ public class SpotifyUser {
     private String accessToken;
     private final SpotifyApi api;
 
-    public SpotifyUser(String clientId, String clientSecret, String userID) {
-        Scanner scan = new Scanner(System.in);
+    public SpotifyUser(String clientId, String clientSecret, String code) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         this.userID = userID;
-        URI redirectUri = SpotifyHttpManager.makeUri("https://example.com/spotify-redirect");
+        URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:8080/playlistCreator");
         api = new SpotifyApi.Builder()
             .setClientSecret(clientSecret)
             .setClientId(clientId)
             .setRedirectUri(redirectUri)
             .build();
-        AuthorizationCodeUriRequest authorizationCodeUriRequest = api.authorizationCodeUri()
-            .state("x4xkmn9pu3j6ukrs8n")
-            .scope("playlist-read-private,playlist-modify-public,playlist-modify-private,playlist-read-collaborative")
-            .show_dialog(true)
-            .build();
-        URI uri = authorizationCodeUriRequest.execute();
-        System.out.println("URI: " + uri.toString());
-        System.out.println("Please enter the code: ");
-        String code = scan.nextLine();
-        System.out.println();
         AuthorizationCodeRequest authorizationCodeRequest = api.authorizationCode(code.trim())
             .build();
         try {
             AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeRequest.execute();
             api.setAccessToken(authorizationCodeCredentials.getAccessToken());
             api.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
-            System.out.println("Expires in: " + authorizationCodeCredentials.getExpiresIn());
+            GetCurrentUsersProfileRequest getCurrentUsersProfileRequest = api.getCurrentUsersProfile()
+                .build();
+            User user = getCurrentUsersProfileRequest.execute();
+            userID = user.getId();
         } catch (IOException | SpotifyWebApiException e) {
             System.out.println("Error has occured: " + e);
             e.printStackTrace();
         }
+
     }
 
     public PlaylistSimplified[] getUserPlaylists() {
