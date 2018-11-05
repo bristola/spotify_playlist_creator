@@ -5,9 +5,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.wrapper.spotify.model_objects.specification.PlaylistSimplified;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
+import com.wrapper.spotify.model_objects.specification.PlaylistSimplified;
 import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
@@ -15,17 +17,17 @@ import java.util.List;
 import java.util.ArrayList;
 import spotify.*;
 
-// TODO: Change the index function to just render a template, but then when a
-// user clicks sign up, it will run a different mapping which will redirect to
-// the correct uri. This removes unnecessary computations when you load the
-// homepage.
-
 @ComponentScan
 @Controller
 public class MainController {
 
     @GetMapping("/")
     public String index(Model model) {
+        return "home";
+    }
+
+    @RequestMapping(value = "/redirect")
+    public ModelAndView redirect_spotify() {
 
         SpotifyUtils su = new SpotifyUtils();
         String uri = "";
@@ -39,13 +41,16 @@ public class MainController {
             e.printStackTrace();
         }
 
-        model.addAttribute("uri", uri);
-
-        return "home";
+        return new ModelAndView(new RedirectView(uri));
     }
 
     @RequestMapping(value = "/playlistCreator")
-    public String getIdByValue(@RequestParam("code") String code, Model model){
+    public ModelAndView playlistCreator() {
+        return new ModelAndView(new RedirectView("/"));
+    }
+
+    @RequestMapping(value = "/playlistCreator", params="code")
+    public String playlistCreator(@RequestParam("code") String code, Model model){
 
         SpotifyUtils su = new SpotifyUtils();
         SpotifyUser user = null;
