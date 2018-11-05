@@ -1,3 +1,5 @@
+package spotify;
+
 public class Song {
 
     private final String name;

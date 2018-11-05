@@ -1,7 +1,14 @@
+package spotify;
+
 import com.wrapper.spotify.SpotifyApi;
+import com.wrapper.spotify.SpotifyHttpManager;
 import com.wrapper.spotify.exceptions.SpotifyWebApiException;
 import com.wrapper.spotify.model_objects.credentials.ClientCredentials;
 import com.wrapper.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
+import com.wrapper.spotify.model_objects.credentials.AuthorizationCodeCredentials;
+import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
+import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
+import java.net.URI;
 import java.util.Scanner;
 import java.io.File;
 import java.io.IOException;
@@ -10,21 +17,31 @@ import java.util.ArrayList;
 
 public class SpotifyUtils {
 
-    public String getAccessToken(String clientId, String clientSecret) {
+    private String uri;
+
+    public String getURI(String clientId, String clientSecret) {
 
         try {
 
-            SpotifyApi spotifyApi = new SpotifyApi.Builder()
+            SpotifyApi api = new SpotifyApi.Builder()
                 .setClientId(clientId)
                 .setClientSecret(clientSecret)
                 .build();
 
-            ClientCredentialsRequest clientCredentialsRequest = spotifyApi.clientCredentials()
+            URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:8080/playlistCreator");
+            api = new SpotifyApi.Builder()
+                .setClientSecret(clientSecret)
+                .setClientId(clientId)
+                .setRedirectUri(redirectUri)
                 .build();
+            AuthorizationCodeUriRequest authorizationCodeUriRequest = api.authorizationCodeUri()
+                .state("x4xkmn9pu3j6ukrs8n")
+                .scope("playlist-read-private,playlist-modify-public,playlist-modify-private,playlist-read-collaborative")
+                .show_dialog(true)
+                .build();
+            URI uri = authorizationCodeUriRequest.execute();
 
-            ClientCredentials clientCredentials = clientCredentialsRequest.execute();
-
-            return clientCredentials.getAccessToken();
+            return uri.toString();
 
         } catch (Exception e) {
             e.printStackTrace();
