@@ -19,6 +19,8 @@ import com.wrapper.spotify.requests.authorization.authorization_code.Authorizati
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
 import com.wrapper.spotify.model_objects.specification.User;
 import com.wrapper.spotify.requests.data.users_profile.GetCurrentUsersProfileRequest;
+import com.wrapper.spotify.model_objects.specification.Playlist;
+import com.wrapper.spotify.requests.data.playlists.GetPlaylistRequest;
 import java.net.URI;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
@@ -83,7 +85,20 @@ public class SpotifyUser {
 
     }
 
-    public List<Song> getTracksFromPlaylist(PlaylistSimplified p) {
+    public Playlist getPlaylistByID(String id) {
+        try {
+            GetPlaylistRequest getPlaylistRequest = api
+                .getPlaylist(id)
+                .build();
+            Playlist playlist = getPlaylistRequest.execute();
+            return playlist;
+        } catch (IOException | SpotifyWebApiException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        return null;
+    }
+
+    public List<Song> getTracksFromPlaylist(Playlist p) {
         try {
             GetPlaylistsTracksRequest getPlaylistsTracksRequest = api
                 .getPlaylistsTracks(p.getId())
