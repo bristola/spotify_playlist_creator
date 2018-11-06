@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-    <h1>Welcome</h1>
+    <h2>Which playlist would you like to add to?</h2>
     <ul th:each="playlist : ${playlists}">
-        <li th:text="${playlist.name}"></li>
+        <a th:href="@{addSongs(playlistID=${playlist.id})}"><li th:text="${playlist.name}"></li></a>
     </ul>
 </html>

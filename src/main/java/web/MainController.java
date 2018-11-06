@@ -17,8 +17,6 @@ import java.util.List;
 import java.util.ArrayList;
 import spotify.*;
 
-// TODO: use session variables to save user's state
-
 @ComponentScan
 @Controller
 public class MainController {
