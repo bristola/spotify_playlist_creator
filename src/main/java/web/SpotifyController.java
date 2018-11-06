@@ -52,13 +52,18 @@ public class SpotifyController {
         return new ModelAndView(new RedirectView("/options"));
     }
 
+    // @RequestMapping(value = "/options")
+    // public String pickOptions(Model model) {
+    //     PlaylistSimplified[] playlists = spotifyUser.getUserPlaylists();
+    //
+    //     model.addAttribute("playlists", playlists);
+    //
+    //     return "playlistCreator";
+    // }
+
     @RequestMapping(value = "/options")
-    public String pickOptions(Model model) {
-        PlaylistSimplified[] playlists = spotifyUser.getUserPlaylists();
-
-        model.addAttribute("playlists", playlists);
-
-        return "playlistCreator";
+    public String pickOptions() {
+        return "options";
     }
 
 }
