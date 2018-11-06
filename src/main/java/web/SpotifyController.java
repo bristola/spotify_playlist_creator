@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import org.springframework.context.annotation.Scope;
 import com.wrapper.spotify.model_objects.specification.PlaylistSimplified;
 import java.util.Scanner;
 import java.io.File;
@@ -21,29 +22,43 @@ import spotify.*;
 
 @ComponentScan
 @Controller
-public class MainController {
+@Scope("session")
+public class SpotifyController {
 
-    @GetMapping("/")
-    public String index(Model model) {
-        return "home";
+    private SpotifyUser spotifyUser = null;
+
+    @RequestMapping(value = "/playlistCreator")
+    public ModelAndView playlistCreator() {
+        return new ModelAndView(new RedirectView("/"));
     }
 
-    @RequestMapping(value = "/redirect")
-    public ModelAndView redirect_spotify() {
+    @RequestMapping(value = "/playlistCreator", params="code")
+    public ModelAndView playlistCreator(@RequestParam("code") String code, Model model){
 
         SpotifyUtils su = new SpotifyUtils();
-        String uri = "";
+        SpotifyUser user = null;
+        String clientId = "";
+        String clientSecret = "";
         try {
-            String clientId = su.getClientID();
-            String clientSecret = su.getClientSecret();
-            uri = su.getURI(clientId, clientSecret);
+            clientId = su.getClientID();
+            clientSecret = su.getClientSecret();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
+        spotifyUser = new SpotifyUser(clientId, clientSecret, code);
 
-        return new ModelAndView(new RedirectView(uri));
+        return new ModelAndView(new RedirectView("/options"));
+    }
+
+    @RequestMapping(value = "/options")
+    public String pickOptions(Model model) {
+        PlaylistSimplified[] playlists = spotifyUser.getUserPlaylists();
+
+        model.addAttribute("playlists", playlists);
+
+        return "playlistCreator";
     }
 
 }
