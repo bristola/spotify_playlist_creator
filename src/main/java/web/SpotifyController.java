@@ -72,7 +72,6 @@ public class SpotifyController {
         if (spotifyUser == null)
             return "errorPage";
         Playlist p = spotifyUser.getPlaylistByID(playlistID);
-        System.out.println(p);
         List<Song> songs = spotifyUser.getTracksFromPlaylist(p);
         model.addAttribute("playlist", p.getName());
         model.addAttribute("songs", songs);
