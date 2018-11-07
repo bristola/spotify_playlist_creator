@@ -53,21 +53,36 @@ public class SpotifyController {
 
     @RequestMapping(value = "/options")
     public String pickOptions() {
+        if (spotifyUser == null)
+            return "errorPage";
         return "options";
     }
 
     @RequestMapping(value = "/addToPlaylist")
     public String addToPlaylist(Model model) {
+        if (spotifyUser == null)
+            return "errorPage";
         PlaylistSimplified[] playlists = spotifyUser.getUserPlaylists();
         model.addAttribute("playlists", playlists);
         return "playlistCreator";
     }
 
-    @RequestMapping(value = "/addSongs", params="playlistID")
+    @RequestMapping(value = "/addToPlaylist/addSongs", params="playlistID")
     public String addSongs(@RequestParam("playlistID") String playlistID, Model model) {
+        if (spotifyUser == null)
+            return "errorPage";
         Playlist p = spotifyUser.getPlaylistByID(playlistID);
+        System.out.println(p);
+        List<Song> songs = spotifyUser.getTracksFromPlaylist(p);
         model.addAttribute("playlist", p.getName());
+        model.addAttribute("songs", songs);
         return "addSongs";
+    }
+
+    @RequestMapping(value="/signout")
+    public ModelAndView signout() {
+        spotifyUser = null;
+        return new ModelAndView(new RedirectView("/"));
     }
 
 }

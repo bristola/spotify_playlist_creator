@@ -1,4 +1,8 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+    <a href="/signout"><h5>Signout</h5></a>
     <h2>Add songs to <span th:text="${playlist}"></span></h2>
+    <ul th:each="song : ${songs}">
+        <li th:text="${song.name}"></li>
+    </ul>
 </html>
