@@ -9,17 +9,17 @@
     <form action="#" th:action="@{/addToPlaylist/addSongs(playlistID=${playlistID})}" th:object="${filterOptions}" method="post">
 
         <br><label for="genre">Genre</label><br>
-        <select name="genre" th:field="*{genre}"  id="dropOperator">
+        <select name="genre" th:field="*{genre}"  id="dropOperator" multiple>
             <option th:each="genre : ${genres}" th:value="${genre}" th:text="${genre}"></option>
         </select>
 
         <br><label for="Artist">Artist</label><br>
-        <select name="artist" th:field="*{artist}"  id="dropOperator">
+        <select name="artist" th:field="*{artist}"  id="dropOperator" multiple>
             <option th:each="artist : ${artists}" th:value="${artist}" th:text="${artist}"></option>
         </select>
 
         <br><label for="Album">Album</label><br>
-        <select name="album" th:field="*{album}"  id="dropOperator">
+        <select name="album" th:field="*{album}"  id="dropOperator" multiple>
             <option th:each="album : ${albums}" th:value="${album}" th:text="${album}"></option>
         </select>
 

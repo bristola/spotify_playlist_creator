@@ -1,50 +1,52 @@
 package data;
 
+import java.util.List;
+
 public class FilterOptions {
 
-    private String genre;
-    private String artist;
-    private Integer popularityMin;
-    private Integer popularityMax;
-    private String album;
+    private List<String> genre;
+    private List<String> artist;
+    private List<Integer> popularityMin;
+    private List<Integer> popularityMax;
+    private List<String> album;
 
-    public String getGenre() {
+    public List<String> getGenre() {
         return genre;
     }
 
-    public String getArtist() {
+    public List<String> getArtist() {
         return artist;
     }
 
-    public Integer getPopularityMin() {
+    public List<Integer> getPopularityMin() {
         return popularityMin;
     }
 
-    public Integer getPopularityMax() {
+    public List<Integer> getPopularityMax() {
         return popularityMax;
     }
 
-    public String getAlbum() {
+    public List<String> getAlbum() {
         return album;
     }
 
-    public void setGenre(String genre) {
+    public void setGenre(List<String> genre) {
         this.genre = genre;
     }
 
-    public void setArtist(String artist) {
+    public void setArtist(List<String> artist) {
         this.artist = artist;
     }
 
-    public void setPopularityMin(Integer popularityMin) {
+    public void setPopularityMin(List<Integer> popularityMin) {
         this.popularityMin = popularityMin;
     }
 
-    public void setPopularityMax(Integer popularityMax) {
+    public void setPopularityMax(List<Integer> popularityMax) {
         this.popularityMax = popularityMax;
     }
 
-    public void setAlbum(String album) {
+    public void setAlbum(List<String> album) {
         this.album = album;
     }
 
