@@ -3,7 +3,15 @@
     <a href="/signout"><h5>Signout</h5></a>
     <a href="/addToPlaylist"><h5>Cancel</h5></a>
     <h2>Add songs to <span th:text="${playlist}"></span></h2>
-    <ul th:each="song : ${songs}">
+    <!-- <ul th:each="song : ${songs}">
         <li th:text="${song.name}"></li>
-    </ul>
+    </ul> -->
+    <form action="#" th:action="@{/addToPlaylist/addSongs(playlistID=${playlistID})}" th:object="${filterOptions}" method="post">
+        <p>Genre: <input type="text" th:field="*{genre}"/></p>
+        <p>Artist: <input type="text" th:field="*{artist}"/></p>
+        <p>Popularity Minimum: <input type="number" th:field="*{popularityMin}"/></p>
+        <p>Popularity Maximum: <input type="number" th:field="*{popularityMax}"/></p>
+        <p>Album: <input type="text" th:field="*{album}"/></p>
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </form>
 </html>
