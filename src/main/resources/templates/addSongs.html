@@ -7,11 +7,29 @@
         <li th:text="${song.name}"></li>
     </ul> -->
     <form action="#" th:action="@{/addToPlaylist/addSongs(playlistID=${playlistID})}" th:object="${filterOptions}" method="post">
-        <p>Genre: <input type="text" th:field="*{genre}"/></p>
-        <p>Artist: <input type="text" th:field="*{artist}"/></p>
+
+        <br><label for="genre">Genre</label><br>
+        <select name="genre" th:field="*{genre}"  id="dropOperator">
+            <option th:each="genre : ${genres}" th:value="${genre}" th:text="${genre}"></option>
+        </select>
+
+        <br><label for="Artist">Artist</label><br>
+        <select name="artist" th:field="*{artist}"  id="dropOperator">
+            <option th:each="artist : ${artists}" th:value="${artist}" th:text="${artist}"></option>
+        </select>
+
+        <br><label for="Album">Album</label><br>
+        <select name="album" th:field="*{album}"  id="dropOperator">
+            <option th:each="album : ${albums}" th:value="${album}" th:text="${album}"></option>
+        </select>
+
+        <!-- <p>Genre: <input type="text" th:field="*{genre}"/></p>
+        <p>Artist: <input type="text" th:field="*{artist}"/></p> -->
+        <!-- <p>Album: <input type="text" th:field="*{album}"/></p> -->
+
         <p>Popularity Minimum: <input type="number" th:field="*{popularityMin}"/></p>
         <p>Popularity Maximum: <input type="number" th:field="*{popularityMax}"/></p>
-        <p>Album: <input type="text" th:field="*{album}"/></p>
+
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>
 </html>

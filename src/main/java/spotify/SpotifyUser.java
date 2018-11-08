@@ -193,9 +193,11 @@ public class SpotifyUser {
     public List<String> getArtists(List<Song> songs) {
         List<String> artists = new ArrayList<String>();
         for (Song song : songs) {
-            String art = song.getArtists();
-            if (!artists.contains(art))
-                artists.add(art);
+            String[] art = song.getArtists();
+            for (String a : art) {
+                if (!artists.contains(a))
+                    artists.add(a);
+            }
         }
         return artists;
     }
@@ -204,8 +206,8 @@ public class SpotifyUser {
         List<String> albums = new ArrayList<String>();
         for (Song song : songs) {
             String alb = song.getAlbum();
-            if (!artists.contains(alb))
-                artists.add(alb);
+            if (!albums.contains(alb))
+                albums.add(alb);
         }
         return albums;
     }

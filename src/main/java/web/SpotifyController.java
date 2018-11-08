@@ -75,10 +75,15 @@ public class SpotifyController {
         if (spotifyUser == null)
             return "errorPage";
         Playlist p = spotifyUser.getPlaylistByID(playlistID);
-        // List<Song> songs = spotifyUser.getTracksFromPlaylist(p);
-        model.addAttribute("playlist", p.getName());
-        // model.addAttribute("songs", songs);
+        List<Song> songs = spotifyUser.getTracksFromPlaylist(p);
+        List<String> genres = spotifyUser.getGenres(songs);
+        List<String> albums = spotifyUser.getAlbums(songs);
+        List<String> artists = spotifyUser.getArtists(songs);
 
+        model.addAttribute("genres", genres);
+        model.addAttribute("albums", albums);
+        model.addAttribute("artists", artists);
+        model.addAttribute("playlist", p.getName());
         model.addAttribute("filterOptions", new FilterOptions());
         model.addAttribute("playlistID", playlistID);
 
@@ -87,7 +92,7 @@ public class SpotifyController {
 
     @RequestMapping(value="/addToPlaylist/addSongs", params="playlistID", method=RequestMethod.POST)
     public ModelAndView addSongsSubmit(@RequestParam("playlistID") String playlistID, @ModelAttribute FilterOptions filterOptions, Model model) {
-        System.out.println(filterOptions.getGenre());
+        // System.out.println(filterOptions.getGenre());
         return new ModelAndView(new RedirectView("/addToPlaylist/success"));
     }
 
