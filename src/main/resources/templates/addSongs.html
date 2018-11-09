@@ -16,32 +16,31 @@
     <a href="/signout"><h5>Signout</h5></a>
     <a href="/addToPlaylist"><h5>Cancel</h5></a>
     <h2>Add songs to <span th:text="${playlist}"></span></h2>
-    <!-- <ul th:each="song : ${songs}">
-        <li th:text="${song.name}"></li>
-    </ul> -->
+
     <form action="#" th:action="@{/addToPlaylist/addSongs(playlistID=${playlistID})}" th:object="${filterOptions}" method="post">
 
+        <br><label for="playlist">Playlist to add from</label><br>
+        <select name="playlist" th:field="*{playlistID}" id="dropOperatorSigle" data-style="btn-default" class="selectpicker form-control">
+            <option th:each="playlist : ${playlists}" th:value="${playlist.id}" th:text="${playlist.name}"></option>
+        </select>
+
         <br><label for="genre">Genre</label><br>
-        <select style="width: 30%; padding-left: 5px;" name="genre" th:field="*{genre}"  id="dropOperator" data-style="btn-default" class="selectpicker form-control" multiple>
+        <select name="genre" th:field="*{genre}"  id="dropOperator" data-style="btn-default" class="selectpicker form-control" multiple>
             <option th:each="genre : ${genres}" th:value="${genre}" th:text="${genre}"></option>
         </select>
 
         <br><label for="Artist">Artist</label><br>
-        <select style="width: 30%; padding-left: 5px;" name="artist" th:field="*{artist}"  id="dropOperator" data-style="btn-default" class="selectpicker form-control" multiple>
+        <select name="artist" th:field="*{artist}"  id="dropOperator" data-style="btn-default" class="selectpicker form-control" multiple>
             <option th:each="artist : ${artists}" th:value="${artist}" th:text="${artist}"></option>
         </select>
 
         <br><label for="Album">Album</label><br>
-        <select style="width: 30%; padding-left: 5px;" name="album" th:field="*{album}"  id="dropOperator" data-style="btn-default" class="selectpicker form-control" multiple>
+        <select name="album" th:field="*{album}"  id="dropOperator" data-style="btn-default" class="selectpicker form-control" multiple>
             <option th:each="album : ${albums}" th:value="${album}" th:text="${album}"></option>
         </select>
 
-        <!-- <p>Genre: <input type="text" th:field="*{genre}"/></p>
-        <p>Artist: <input type="text" th:field="*{artist}"/></p> -->
-        <!-- <p>Album: <input type="text" th:field="*{album}"/></p> -->
-
-        <p>Popularity Minimum: <input type="number" th:field="*{popularityMin}"/></p>
-        <p>Popularity Maximum: <input type="number" th:field="*{popularityMax}"/></p>
+        <p>Popularity Minimum: <input type="number" th:field="*{popularityMin}" value="0" min="0" max="100"/></p>
+        <p>Popularity Maximum: <input type="number" th:field="*{popularityMax}" value="100" min="0" max="100"/></p>
 
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
     </form>

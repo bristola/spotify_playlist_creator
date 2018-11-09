@@ -4,11 +4,16 @@ import java.util.List;
 
 public class FilterOptions {
 
+    private String playlistID;
     private List<String> genre;
     private List<String> artist;
-    private List<Integer> popularityMin;
-    private List<Integer> popularityMax;
+    private Integer popularityMin;
+    private Integer popularityMax;
     private List<String> album;
+
+    public String getPlaylistID() {
+        return playlistID;
+    }
 
     public List<String> getGenre() {
         return genre;
@@ -18,16 +23,20 @@ public class FilterOptions {
         return artist;
     }
 
-    public List<Integer> getPopularityMin() {
+    public Integer getPopularityMin() {
         return popularityMin;
     }
 
-    public List<Integer> getPopularityMax() {
+    public Integer getPopularityMax() {
         return popularityMax;
     }
 
     public List<String> getAlbum() {
         return album;
+    }
+
+    public void setPlaylistID(String playlistID) {
+        this.playlistID = playlistID;
     }
 
     public void setGenre(List<String> genre) {
@@ -38,11 +47,11 @@ public class FilterOptions {
         this.artist = artist;
     }
 
-    public void setPopularityMin(List<Integer> popularityMin) {
+    public void setPopularityMin(Integer popularityMin) {
         this.popularityMin = popularityMin;
     }
 
-    public void setPopularityMax(List<Integer> popularityMax) {
+    public void setPopularityMax(Integer popularityMax) {
         this.popularityMax = popularityMax;
     }
 

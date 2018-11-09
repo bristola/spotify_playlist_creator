@@ -29,6 +29,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
+import data.*;
 
 public class SpotifyUser {
 
@@ -157,21 +158,36 @@ public class SpotifyUser {
         return genres_out;
     }
 
-    public List<Song> filterSongs(List<Song> songs, String genre, String artist, Integer popularityMin, Integer popularityMax, String album) {
+    public List<Song> filterSongs(List<Song> songs, FilterOptions fo) {
 
         List<Song> playlist = new ArrayList<Song>();
 
+        int genreLen = fo.getGenre().size();
+        int artistLen = fo.getArtist().size();
+
         for (Song current : songs) {
-            if (genre != null && !Arrays.asList(current.getGenres()).contains(genre))
+            List<String> genres = Arrays.asList(current.getGenres());
+            List<String> artists = Arrays.asList(current.getArtists());
+            Integer popularity = current.getPopularity();
+            String album = current.getAlbum();
+
+            List<String> tempGenres = new ArrayList<String>(fo.getGenre());
+            List<String> tempArtists = new ArrayList<String>(fo.getArtist());
+
+            tempGenres.removeAll(genres);
+            tempArtists.removeAll(artists);
+
+            if (fo.getGenre().size() != 0 && tempGenres.size() < genreLen)
                 continue;
-            if (artist != null && !Arrays.asList(current.getArtists()).contains(artist))
+            if (fo.getArtist().size() != 0 && tempArtists.size() < artistLen)
                 continue;
-            if (popularityMin != null && current.getPopularity() < popularityMin)
+            if (fo.getPopularityMin() != null && current.getPopularity() < fo.getPopularityMin())
                 continue;
-            if (popularityMax != null && current.getPopularity() > popularityMax)
+            if (fo.getPopularityMax() != null && current.getPopularity() > fo.getPopularityMax())
                 continue;
-            if (album != null && !current.getAlbum().trim().equals(album.trim()))
+            if (fo.getAlbum().size() != 0 && !fo.getAlbum().contains(album))
                 continue;
+
             playlist.add(current);
         }
 

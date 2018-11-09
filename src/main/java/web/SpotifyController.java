@@ -74,12 +74,15 @@ public class SpotifyController {
     public String addSongs(@RequestParam("playlistID") String playlistID, Model model) {
         if (spotifyUser == null)
             return "errorPage";
+        PlaylistSimplified[] playlists = spotifyUser.getUserPlaylists();
+        System.out.println(playlists.length);
         Playlist p = spotifyUser.getPlaylistByID(playlistID);
         List<Song> songs = spotifyUser.getTracksFromPlaylist(p);
         List<String> genres = spotifyUser.getGenres(songs);
         List<String> albums = spotifyUser.getAlbums(songs);
         List<String> artists = spotifyUser.getArtists(songs);
 
+        model.addAttribute("playlists", playlists);
         model.addAttribute("genres", genres);
         model.addAttribute("albums", albums);
         model.addAttribute("artists", artists);
@@ -92,10 +95,10 @@ public class SpotifyController {
 
     @RequestMapping(value="/addToPlaylist/addSongs", params="playlistID", method=RequestMethod.POST)
     public ModelAndView addSongsSubmit(@RequestParam("playlistID") String playlistID, @ModelAttribute FilterOptions filterOptions, Model model) {
-        // System.out.println(filterOptions.getGenre());
         for (String genre : filterOptions.getGenre()) {
             System.out.println(genre);
         }
+        // TODO: Actually do the filtering and adding songs to playlist
         return new ModelAndView(new RedirectView("/addToPlaylist/success"));
     }
 
