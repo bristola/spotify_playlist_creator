@@ -1,5 +1,18 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/css/bootstrap-select.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.7.5/js/bootstrap-select.min.js"></script>
+        <style>
+            #dropOperator {
+                width: 50%;
+                padding-left: 5px;
+            }
+        </style>
+    </head>
     <a href="/signout"><h5>Signout</h5></a>
     <a href="/addToPlaylist"><h5>Cancel</h5></a>
     <h2>Add songs to <span th:text="${playlist}"></span></h2>
@@ -9,17 +22,17 @@
     <form action="#" th:action="@{/addToPlaylist/addSongs(playlistID=${playlistID})}" th:object="${filterOptions}" method="post">
 
         <br><label for="genre">Genre</label><br>
-        <select name="genre" th:field="*{genre}"  id="dropOperator" multiple>
+        <select style="width: 30%; padding-left: 5px;" name="genre" th:field="*{genre}"  id="dropOperator" data-style="btn-default" class="selectpicker form-control" multiple>
             <option th:each="genre : ${genres}" th:value="${genre}" th:text="${genre}"></option>
         </select>
 
         <br><label for="Artist">Artist</label><br>
-        <select name="artist" th:field="*{artist}"  id="dropOperator" multiple>
+        <select style="width: 30%; padding-left: 5px;" name="artist" th:field="*{artist}"  id="dropOperator" data-style="btn-default" class="selectpicker form-control" multiple>
             <option th:each="artist : ${artists}" th:value="${artist}" th:text="${artist}"></option>
         </select>
 
         <br><label for="Album">Album</label><br>
-        <select name="album" th:field="*{album}"  id="dropOperator" multiple>
+        <select style="width: 30%; padding-left: 5px;" name="album" th:field="*{album}"  id="dropOperator" data-style="btn-default" class="selectpicker form-control" multiple>
             <option th:each="album : ${albums}" th:value="${album}" th:text="${album}"></option>
         </select>
 

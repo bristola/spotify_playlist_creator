@@ -93,6 +93,9 @@ public class SpotifyController {
     @RequestMapping(value="/addToPlaylist/addSongs", params="playlistID", method=RequestMethod.POST)
     public ModelAndView addSongsSubmit(@RequestParam("playlistID") String playlistID, @ModelAttribute FilterOptions filterOptions, Model model) {
         // System.out.println(filterOptions.getGenre());
+        for (String genre : filterOptions.getGenre()) {
+            System.out.println(genre);
+        }
         return new ModelAndView(new RedirectView("/addToPlaylist/success"));
     }
 
