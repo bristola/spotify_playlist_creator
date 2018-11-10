@@ -75,7 +75,6 @@ public class SpotifyController {
         if (spotifyUser == null)
             return "errorPage";
         PlaylistSimplified[] playlists = spotifyUser.getUserPlaylists();
-        System.out.println(playlists.length);
         Playlist p = spotifyUser.getPlaylistByID(playlistID);
         List<Song> songs = spotifyUser.getTracksFromPlaylist(p);
         List<String> genres = spotifyUser.getGenres(songs);
@@ -86,7 +85,7 @@ public class SpotifyController {
         model.addAttribute("genres", genres);
         model.addAttribute("albums", albums);
         model.addAttribute("artists", artists);
-        model.addAttribute("playlist", p.getName());
+        model.addAttribute("playlistName", p.getName());
         model.addAttribute("filterOptions", new FilterOptions());
         model.addAttribute("playlistID", playlistID);
 
@@ -95,8 +94,22 @@ public class SpotifyController {
 
     @RequestMapping(value="/addToPlaylist/addSongs", params="playlistID", method=RequestMethod.POST)
     public ModelAndView addSongsSubmit(@RequestParam("playlistID") String playlistID, @ModelAttribute FilterOptions filterOptions, Model model) {
-        for (String genre : filterOptions.getGenre()) {
-            System.out.println(genre);
+        // for (String genre : filterOptions.getGenre()) {
+        //     System.out.println(genre);
+        // }
+        Playlist p = spotifyUser.getPlaylistByID(playlistID);
+        System.out.println(playlistID);
+        System.out.println(p);
+        System.out.println(filterOptions.getPlaylistAdd());
+        List<Song> songs = spotifyUser.getTracksFromPlaylist(p);
+        System.out.println("Before Songs:");
+        for (Song s : songs) {
+            System.out.println(s.toString());
+        }
+        List<Song> filtered = spotifyUser.filterSongs(songs, filterOptions);
+        System.out.println("After Songs:");
+        for (Song s : filtered) {
+            System.out.println(s.toString());
         }
         // TODO: Actually do the filtering and adding songs to playlist
         return new ModelAndView(new RedirectView("/addToPlaylist/success"));

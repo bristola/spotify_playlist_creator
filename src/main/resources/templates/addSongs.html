@@ -15,12 +15,11 @@
     </head>
     <a href="/signout"><h5>Signout</h5></a>
     <a href="/addToPlaylist"><h5>Cancel</h5></a>
-    <h2>Add songs to <span th:text="${playlist}"></span></h2>
-
+    <h2>Add songs to <span th:text="${playlistName}"></span></h2>
     <form action="#" th:action="@{/addToPlaylist/addSongs(playlistID=${playlistID})}" th:object="${filterOptions}" method="post">
 
-        <br><label for="playlist">Playlist to add from</label><br>
-        <select name="playlist" th:field="*{playlistID}" id="dropOperatorSigle" data-style="btn-default" class="selectpicker form-control">
+        <br><label for="playlist">Playlist to add to</label><br>
+        <select name="playlist" th:field="*{playlistAdd}" id="dropOperatorSigle" data-style="btn-default" class="selectpicker form-control">
             <option th:each="playlist : ${playlists}" th:value="${playlist.id}" th:text="${playlist.name}"></option>
         </select>
 

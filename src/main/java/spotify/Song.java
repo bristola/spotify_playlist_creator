@@ -48,4 +48,20 @@ public class Song {
         return uri;
     }
 
+    @Override
+    public String toString() {
+        String out = name;
+        out = out + "\n\t" + id;
+        out = out + "\n\t" + uri;
+        out = out + "\n\t" + album;
+        out = out + "\n\t" + popularity;
+        out = out + "\n\tArtists:\n";
+        for (String artist : artists)
+            out = out + "\t\t" + artist;
+        out = out + "\n\tGenres:\n";
+        for (String genre : genres)
+            out = out + "\t\t" + genre;
+        return out;
+    }
+
 }

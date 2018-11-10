@@ -42,7 +42,6 @@ public class SpotifyUser {
     public SpotifyUser(String clientId, String clientSecret, String code) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
-        this.userID = userID;
         URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:8080/playlistCreator");
         api = new SpotifyApi.Builder()
             .setClientSecret(clientSecret)
@@ -166,20 +165,22 @@ public class SpotifyUser {
         int artistLen = fo.getArtist().size();
 
         for (Song current : songs) {
-            List<String> genres = Arrays.asList(current.getGenres());
-            List<String> artists = Arrays.asList(current.getArtists());
+            List<String> genres = new ArrayList<String>(Arrays.asList(current.getGenres()));
+            List<String> artists = new ArrayList<String>(Arrays.asList(current.getArtists()));
             Integer popularity = current.getPopularity();
             String album = current.getAlbum();
 
-            List<String> tempGenres = new ArrayList<String>(fo.getGenre());
-            List<String> tempArtists = new ArrayList<String>(fo.getArtist());
+            int genreBefore = genres.size();
+            int artistBefore = artists.size();
 
-            tempGenres.removeAll(genres);
-            tempArtists.removeAll(artists);
+            if (genres != null && fo.getGenre() != null)
+                genres.removeAll(fo.getGenre());
+            if (artists != null && fo.getArtist() != null)
+                artists.removeAll(fo.getArtist());
 
-            if (fo.getGenre().size() != 0 && tempGenres.size() < genreLen)
+            if ((genres != null || fo.getGenre() != null) && fo.getGenre().size() != 0 && genres.size() == genreBefore)
                 continue;
-            if (fo.getArtist().size() != 0 && tempArtists.size() < artistLen)
+            if ((artists != null || fo.getArtist() != null) && fo.getArtist().size() != 0 && artists.size() == artistBefore)
                 continue;
             if (fo.getPopularityMin() != null && current.getPopularity() < fo.getPopularityMin())
                 continue;

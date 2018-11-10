@@ -4,15 +4,15 @@ import java.util.List;
 
 public class FilterOptions {
 
-    private String playlistID;
+    private String playlistAdd;
     private List<String> genre;
     private List<String> artist;
     private Integer popularityMin;
     private Integer popularityMax;
     private List<String> album;
 
-    public String getPlaylistID() {
-        return playlistID;
+    public String getPlaylistAdd() {
+        return playlistAdd;
     }
 
     public List<String> getGenre() {
@@ -35,8 +35,8 @@ public class FilterOptions {
         return album;
     }
 
-    public void setPlaylistID(String playlistID) {
-        this.playlistID = playlistID;
+    public void setPlaylistAdd(String playlistAdd) {
+        this.playlistAdd = playlistAdd;
     }
 
     public void setGenre(List<String> genre) {

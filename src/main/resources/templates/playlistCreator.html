@@ -5,7 +5,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <a href="/signout"><h5>Signout</h5></a>
     <a href="/options"><h5>Back</h5></a>
-    <h2>Which playlist would you like to add to?</h2>
+    <h2>Which playlist would you like to add from?</h2>
     <ul th:each="playlist : ${playlists}">
         <a th:href="@{addToPlaylist/addSongs(playlistID=${playlist.id})}"><li th:text="${playlist.name}"></li></a>
     </ul>
