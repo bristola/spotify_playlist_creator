@@ -15,7 +15,7 @@
     </head>
     <a href="/signout"><h5>Signout</h5></a>
     <a href="/addToPlaylist"><h5>Cancel</h5></a>
-    <h2>Add songs to <span th:text="${playlistName}"></span></h2>
+    <h2>Add songs from <span th:text="${playlistName}"></span></h2>
     <form action="#" th:action="@{/addToPlaylist/addSongs(playlistID=${playlistID})}" th:object="${filterOptions}" method="post">
 
         <br><label for="playlist">Playlist to add to</label><br>

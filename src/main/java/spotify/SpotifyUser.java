@@ -182,9 +182,9 @@ public class SpotifyUser {
                 continue;
             if ((artists != null || fo.getArtist() != null) && fo.getArtist().size() != 0 && artists.size() == artistBefore)
                 continue;
-            if (fo.getPopularityMin() != null && current.getPopularity() < fo.getPopularityMin())
+            if (fo.getPopularityMin() != null && popularity < fo.getPopularityMin())
                 continue;
-            if (fo.getPopularityMax() != null && current.getPopularity() > fo.getPopularityMax())
+            if (fo.getPopularityMax() != null && popularity > fo.getPopularityMax())
                 continue;
             if (fo.getAlbum().size() != 0 && !fo.getAlbum().contains(album))
                 continue;
