@@ -74,12 +74,13 @@ public class SpotifyController {
     public String addSongs(@RequestParam("playlistID") String playlistID, Model model) {
         if (spotifyUser == null)
             return "errorPage";
+        SpotifyUtils su = new SpotifyUtils();
         PlaylistSimplified[] playlists = spotifyUser.getUserPlaylists();
         Playlist p = spotifyUser.getPlaylistByID(playlistID);
         List<Song> songs = spotifyUser.getTracksFromPlaylist(p);
-        List<String> genres = spotifyUser.getGenres(songs);
-        List<String> albums = spotifyUser.getAlbums(songs);
-        List<String> artists = spotifyUser.getArtists(songs);
+        List<String> genres = su.getGenres(songs);
+        List<String> albums = su.getAlbums(songs);
+        List<String> artists = su.getArtists(songs);
 
         model.addAttribute("playlists", playlists);
         model.addAttribute("genres", genres);

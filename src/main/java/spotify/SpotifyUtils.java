@@ -88,6 +88,40 @@ public class SpotifyUtils {
         return playlist;
     }
 
+    public List<String> getGenres(List<Song> songs) {
+        List<String> genres = new ArrayList<String>();
+        for (Song song : songs) {
+            String[] curs = song.getGenres();
+            for (String g : curs) {
+                if (!genres.contains(g))
+                    genres.add(g);
+            }
+        }
+        return genres;
+    }
+
+    public List<String> getArtists(List<Song> songs) {
+        List<String> artists = new ArrayList<String>();
+        for (Song song : songs) {
+            String[] art = song.getArtists();
+            for (String a : art) {
+                if (!artists.contains(a))
+                    artists.add(a);
+            }
+        }
+        return artists;
+    }
+
+    public List<String> getAlbums(List<Song> songs) {
+        List<String> albums = new ArrayList<String>();
+        for (Song song : songs) {
+            String alb = song.getAlbum();
+            if (!albums.contains(alb))
+                albums.add(alb);
+        }
+        return albums;
+    }
+
     public String getClientID() throws IOException {
         File f = new File("spotify_settings.txt");
         Scanner scan = new Scanner(f);
