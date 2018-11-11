@@ -94,15 +94,18 @@ public class SpotifyController {
 
     @RequestMapping(value="/addToPlaylist/addSongs", params="playlistID", method=RequestMethod.POST)
     public ModelAndView addSongsSubmit(@RequestParam("playlistID") String playlistID, @ModelAttribute FilterOptions filterOptions, Model model) {
+        SpotifyUtils su = new SpotifyUtils();
         Playlist p = spotifyUser.getPlaylistByID(playlistID);
         List<Song> songs = spotifyUser.getTracksFromPlaylist(p);
-        List<Song> filtered = spotifyUser.filterSongs(songs, filterOptions);
+        List<Song> filtered = su.filterSongs(songs, filterOptions);
         spotifyUser.addSongsToPlaylist(filterOptions.getPlaylistAdd(), filtered);
         return new ModelAndView(new RedirectView("/addToPlaylist/success"));
     }
 
     @RequestMapping(value="/addToPlaylist/success")
     public String success() {
+        if (spotifyUser == null)
+            return "errorPage";
         return "success";
     }
 

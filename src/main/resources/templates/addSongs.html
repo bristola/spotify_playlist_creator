@@ -20,7 +20,9 @@
 
         <br><label for="playlist">Playlist to add to</label><br>
         <select name="playlist" th:field="*{playlistAdd}" id="dropOperatorSigle" data-style="btn-default" class="selectpicker form-control">
-            <option th:each="playlist : ${playlists}" th:value="${playlist.id}" th:text="${playlist.name}"></option>
+            <div th:each="playlist : ${playlists}">
+                <option th:if="${playlist.name} != ${playlistName}" th:value="${playlist.id}" th:text="${playlist.name}"></option>
+            </div>
         </select>
 
         <br><label for="genre">Genre</label><br>

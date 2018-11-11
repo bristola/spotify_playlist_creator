@@ -14,6 +14,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
+import data.*;
 
 public class SpotifyUtils {
 
@@ -49,6 +51,41 @@ public class SpotifyUtils {
 
         return null;
 
+    }
+
+    public List<Song> filterSongs(List<Song> songs, FilterOptions fo) {
+
+        List<Song> playlist = new ArrayList<Song>();
+
+        for (Song current : songs) {
+            List<String> genres = new ArrayList<String>(Arrays.asList(current.getGenres()));
+            List<String> artists = new ArrayList<String>(Arrays.asList(current.getArtists()));
+            Integer popularity = current.getPopularity();
+            String album = current.getAlbum();
+
+            int genreBefore = genres.size();
+            int artistBefore = artists.size();
+
+            if (genres != null && fo.getGenre() != null)
+                genres.removeAll(fo.getGenre());
+            if (artists != null && fo.getArtist() != null)
+                artists.removeAll(fo.getArtist());
+
+            if ((genres != null && fo.getGenre() != null) && fo.getGenre().size() != 0 && genres.size() == genreBefore)
+                continue;
+            if ((artists != null && fo.getArtist() != null) && fo.getArtist().size() != 0 && artists.size() == artistBefore)
+                continue;
+            if (fo.getPopularityMin() != null && popularity < fo.getPopularityMin())
+                continue;
+            if (fo.getPopularityMax() != null && popularity > fo.getPopularityMax())
+                continue;
+            if (fo.getAlbum() != null && fo.getAlbum().size() != 0 && !fo.getAlbum().contains(album))
+                continue;
+
+            playlist.add(current);
+        }
+
+        return playlist;
     }
 
     public String getClientID() throws IOException {
