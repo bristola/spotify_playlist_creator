@@ -22,6 +22,9 @@ import java.util.ArrayList;
 import spotify.*;
 import data.*;
 
+/**
+ *
+ */
 @ComponentScan
 @Controller
 @Scope("session")

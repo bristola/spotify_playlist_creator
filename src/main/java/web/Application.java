@@ -13,6 +13,9 @@ import org.springframework.context.annotation.ComponentScan;
 // java -jar build/libs/gs-spring-boot-0.1.0.jar
 // http://localhost:8080/
 
+/**
+ *
+ */
 @ComponentScan
 @SpringBootApplication
 public class Application {

@@ -17,6 +17,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import data.*;
 
+/**
+ *
+ */
 public class SpotifyUtils {
 
     private String uri;

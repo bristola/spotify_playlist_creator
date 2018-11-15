@@ -2,6 +2,12 @@ package data;
 
 import java.util.List;
 
+
+/**
+ * This class is a data object to transfer user input data for a post request.
+ * When the user inputs data into the filter options, this object is filled and
+ * passed to the controller that handles the request.
+ */
 public class FilterOptions {
 
     private String playlistAdd;

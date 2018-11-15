@@ -31,6 +31,12 @@ import java.util.Arrays;
 import java.util.Scanner;
 import data.*;
 
+/**
+ * This class is an object which represents the current Spotify user which is
+ * using the application. Must provide an authorization code to gain access to
+ * the viewing and editing of playlists. All functions in this class relate to
+ * accessing data that only the authonticated author can use.
+ */
 public class SpotifyUser {
 
     private String clientId;
@@ -39,10 +45,16 @@ public class SpotifyUser {
     private String accessToken;
     private final SpotifyApi api;
 
+    /*
+        Constructor which needs the developer client ID and client secret. Also
+        needs the code which is returned from the authentication process's link.
+        Represents 3rd step of the Spotify auth system.
+    */
     public SpotifyUser(String clientId, String clientSecret, String code) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
         URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:8080/playlistCreator");
+        // Build api instance variable object using developer info.
         api = new SpotifyApi.Builder()
             .setClientSecret(clientSecret)
             .setClientId(clientId)
@@ -51,6 +63,7 @@ public class SpotifyUser {
         AuthorizationCodeRequest authorizationCodeRequest = api.authorizationCode(code.trim())
             .build();
         try {
+            // Execute request to gain access to user info using code. Update api with this access.
             AuthorizationCodeCredentials authorizationCodeCredentials = authorizationCodeRequest.execute();
             api.setAccessToken(authorizationCodeCredentials.getAccessToken());
             api.setRefreshToken(authorizationCodeCredentials.getRefreshToken());
@@ -65,6 +78,10 @@ public class SpotifyUser {
 
     }
 
+    /*
+        Gets all public and private playlists from the current user by making a
+        request to Spotify.
+    */
     public PlaylistSimplified[] getUserPlaylists() {
         try {
             GetListOfUsersPlaylistsRequest getListOfUsersPlaylistsRequest = api
@@ -72,7 +89,9 @@ public class SpotifyUser {
                 .offset(0)
                 .build();
 
+            // Execute request
             Paging<PlaylistSimplified> playlistSimplifiedPaging = getListOfUsersPlaylistsRequest.execute();
+            // Turn result into an array
             PlaylistSimplified[] playlists = playlistSimplifiedPaging.getItems();
 
             return playlists;
@@ -85,6 +104,9 @@ public class SpotifyUser {
 
     }
 
+    /*
+        Gets an individual playlist object from an ID of a playlist.
+    */
     public Playlist getPlaylistByID(String id) {
         try {
             GetPlaylistRequest getPlaylistRequest = api
@@ -98,6 +120,11 @@ public class SpotifyUser {
         return null;
     }
 
+    /*
+        Gets all tracks from the input playlist, and returns a list of the
+        custom Song object type. This has additional fields such as genres for a
+        given song.
+    */
     public List<Song> getTracksFromPlaylist(Playlist p) {
         try {
             GetPlaylistsTracksRequest getPlaylistsTracksRequest = api
@@ -139,6 +166,9 @@ public class SpotifyUser {
 
     }
 
+    /*
+
+    */
     public String[] getGenres(ArtistSimplified[] artists) throws IOException, SpotifyWebApiException {
         Artist[] a = new Artist[artists.length];
         for (int i = 0; i < a.length; i++) {

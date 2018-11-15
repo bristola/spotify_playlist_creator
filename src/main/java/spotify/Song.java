@@ -1,5 +1,10 @@
 package spotify;
 
+/**
+ * Object which holds data for Songs. One central place that has information on
+ * the songs as well as additional information such as genres. This object is
+ * used in a lot of different methods.
+ */
 public class Song {
 
     private final String name;
@@ -48,6 +53,10 @@ public class Song {
         return uri;
     }
 
+    /*
+        Function to provide a string version which holds all information from
+        the class.
+    */
     @Override
     public String toString() {
         String out = name;
