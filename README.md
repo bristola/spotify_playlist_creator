@@ -16,16 +16,7 @@ Used to connect to Spotify and make requests.
 ## How to run:
 
 1. ```git clone git@github.com:bristola/spotify_playlist_creator.git```
-2. 
-```
-cd spotify_playlist_creator
-```
-3. 
-```
-gradle build
-```
-4. 
-```
-java -jar build/libs/gs-spring-boot-0.1.0.jar
-```
+2. ```cd spotify_playlist_creator```
+3. ```gradle build```
+4. ```java -jar build/libs/gs-spring-boot-0.1.0.jar```
 5. Open http://localhost:8080/ in a web browser
