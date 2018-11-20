@@ -167,7 +167,8 @@ public class SpotifyUser {
     }
 
     /*
-
+        This method takes the list of artists, and then returns a string list
+        which contains all genres that those artists have.
     */
     public String[] getGenres(ArtistSimplified[] artists) throws IOException, SpotifyWebApiException {
         Artist[] a = new Artist[artists.length];
@@ -187,6 +188,11 @@ public class SpotifyUser {
         return genres_out;
     }
 
+    /*
+        Request to add all the songs in the list to the specified playlist.
+        Takes all the URIs from the songs and uses thouse to add them to the
+        playlistID using the spotify api.
+    */
     public void addSongsToPlaylist(String playlistID, List<Song> songs) {
         String[] uris = new String[songs.size()];
         for (int i = 0; i < uris.length; i++) {

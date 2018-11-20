@@ -9,12 +9,11 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 
-// gradle build
-// java -jar build/libs/gs-spring-boot-0.1.0.jar
-// http://localhost:8080/
-
 /**
- *
+ * Main drive class which starts the spring boot website application.
+ * 1. gradle build
+ * 2. java -jar build/libs/gs-spring-boot-0.1.0.jar
+ * 3. http://localhost:8080/
  */
 @ComponentScan
 @SpringBootApplication

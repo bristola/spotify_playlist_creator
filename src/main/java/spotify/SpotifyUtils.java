@@ -18,12 +18,20 @@ import java.util.Arrays;
 import data.*;
 
 /**
- *
+ * This code is all the spotify functions that are needed for the website
+ * which do not require an authentication code. This means that it does not need
+ * to connect to a spotify user's account to access information.
  */
 public class SpotifyUtils {
 
     private String uri;
 
+    /*
+        Takes in the clientID and clientSecret of the developer and generates
+        a uri. This uri is created from the spotify api using these credentials.
+        This uri is used to link the user to a spotify page where the user can
+        sign in to their Spotify account.
+    */
     public String getURI(String clientId, String clientSecret) {
 
         try {
@@ -56,6 +64,10 @@ public class SpotifyUtils {
 
     }
 
+    /*
+        Takes a list of songs along with a filter options object. Returns a list
+        of all songs which satisfy the filter options.
+    */
     public List<Song> filterSongs(List<Song> songs, FilterOptions fo) {
 
         List<Song> playlist = new ArrayList<Song>();
@@ -91,6 +103,9 @@ public class SpotifyUtils {
         return playlist;
     }
 
+    /*
+        Takes the genres from a list of song objects and returns the strings.
+    */
     public List<String> getGenres(List<Song> songs) {
         List<String> genres = new ArrayList<String>();
         for (Song song : songs) {
@@ -103,6 +118,9 @@ public class SpotifyUtils {
         return genres;
     }
 
+    /*
+        Takes the artists from a list of song objects and returns the strings.
+    */
     public List<String> getArtists(List<Song> songs) {
         List<String> artists = new ArrayList<String>();
         for (Song song : songs) {
@@ -115,6 +133,9 @@ public class SpotifyUtils {
         return artists;
     }
 
+    /*
+        Takes the albums from a list of song objects and returns the strings.
+    */
     public List<String> getAlbums(List<Song> songs) {
         List<String> albums = new ArrayList<String>();
         for (Song song : songs) {
@@ -125,6 +146,9 @@ public class SpotifyUtils {
         return albums;
     }
 
+    /*
+        Gets the developer client ID from a file.
+    */
     public String getClientID() throws IOException {
         File f = new File("spotify_settings.txt");
         Scanner scan = new Scanner(f);
@@ -139,6 +163,9 @@ public class SpotifyUtils {
         return "";
     }
 
+    /*
+        Gets the developer client secret from a file.
+    */
     public String getClientSecret() throws IOException {
         File f = new File("spotify_settings.txt");
         Scanner scan = new Scanner(f);
@@ -153,6 +180,9 @@ public class SpotifyUtils {
         return "";
     }
 
+    /*
+        Gets the developer user ID from a file.
+    */
     public String getUserID() throws IOException {
         File f = new File("spotify_settings.txt");
         Scanner scan = new Scanner(f);

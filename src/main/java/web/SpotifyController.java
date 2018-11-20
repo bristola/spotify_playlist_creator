@@ -23,20 +23,31 @@ import spotify.*;
 import data.*;
 
 /**
- *
+ * Controller which hadles all the requests after the user is already logged in.
+ * Holds a session variable of spotifyUser. So that the user only needs to sign
+ * in once and this state object is saved until the session is over or the user
+ * logs out.
  */
 @ComponentScan
 @Controller
 @Scope("session")
 public class SpotifyController {
 
+    // Instance variable for the current spotifyUser who signed in.
     private SpotifyUser spotifyUser = null;
 
+    /*
+        If no parameters are specified, redirect to home page.
+    */
     @RequestMapping(value = "/playlistCreator")
     public ModelAndView playlistCreator() {
         return new ModelAndView(new RedirectView("/"));
     }
 
+    /*
+        Takes the users code returned from auth process and creates a spotify
+        user object by signing in to the api using the code.
+    */
     @RequestMapping(value = "/playlistCreator", params="code")
     public ModelAndView playlistCreator(@RequestParam("code") String code, Model model){
 
@@ -57,6 +68,9 @@ public class SpotifyController {
         return new ModelAndView(new RedirectView("/options"));
     }
 
+    /*
+        Options page to select action.
+    */
     @RequestMapping(value = "/options")
     public String pickOptions() {
         if (spotifyUser == null)
@@ -64,6 +78,9 @@ public class SpotifyController {
         return "options";
     }
 
+    /*
+        Returns an HTML page with all their playlists the user can add from.
+    */
     @RequestMapping(value = "/addToPlaylist")
     public String addToPlaylist(Model model) {
         if (spotifyUser == null)
@@ -73,6 +90,12 @@ public class SpotifyController {
         return "playlistCreator";
     }
 
+    /*
+        Filter page, where options are set for all available artists, genres,
+        etc. can be selected by the user to filter songs by. User selects a
+        playlist to add to and the types of songs they want from the selected
+        playlist.
+    */
     @RequestMapping(value = "/addToPlaylist/addSongs", params="playlistID", method=RequestMethod.GET)
     public String addSongs(@RequestParam("playlistID") String playlistID, Model model) {
         if (spotifyUser == null)
@@ -96,6 +119,10 @@ public class SpotifyController {
         return "addSongs";
     }
 
+    /*
+        Post request for adding songs. Takes all the filter options, and applys
+        them to the selected playlist. Adds valid songs to a playlist.
+    */
     @RequestMapping(value="/addToPlaylist/addSongs", params="playlistID", method=RequestMethod.POST)
     public ModelAndView addSongsSubmit(@RequestParam("playlistID") String playlistID, @ModelAttribute FilterOptions filterOptions, Model model) {
         SpotifyUtils su = new SpotifyUtils();
@@ -106,6 +133,9 @@ public class SpotifyController {
         return new ModelAndView(new RedirectView("/addToPlaylist/success"));
     }
 
+    /*
+        Success page after adding songs to spotify.
+    */
     @RequestMapping(value="/addToPlaylist/success")
     public String success() {
         if (spotifyUser == null)
@@ -113,6 +143,9 @@ public class SpotifyController {
         return "success";
     }
 
+    /*
+        Sets session variable to null and redirects to home page.
+    */
     @RequestMapping(value="/signout")
     public ModelAndView signout() {
         spotifyUser = null;

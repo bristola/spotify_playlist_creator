@@ -18,17 +18,25 @@ import java.util.ArrayList;
 import spotify.*;
 
 /**
- *
+ * Controller which handles all the requests to the server where the user is not
+ * yet signed in.
  */
 @ComponentScan
 @Controller
 public class MainController {
 
+    /*
+        Home page. Just returns the HTML.
+    */
     @GetMapping("/")
     public String index(Model model) {
         return "home";
     }
 
+    /*
+        When the user signs in, this function redirects them to a spotify
+        authentication page.
+    */
     @RequestMapping(value = "/redirect")
     public ModelAndView redirect_spotify() {
 
