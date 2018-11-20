@@ -15,7 +15,7 @@ Used to connect to Spotify and make requests.
 
 ## How to run:
 
-1. git clone git@github.com:bristola/spotify_playlist_creator.git
+1. ```git clone git@github.com:bristola/spotify_playlist_creator.git```
 2. 
 ```
 cd spotify_playlist_creator
