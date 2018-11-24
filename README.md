@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.com/bristola/spotify_playlist_creator.svg?branch=master)](https://travis-ci.com/bristola/spotify_playlist_creator)
+
 # Spotify Playlist Creator
 ## By Austin Bristol
 
