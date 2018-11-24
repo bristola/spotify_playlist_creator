@@ -2,11 +2,6 @@ package spotify;
 
 import com.wrapper.spotify.SpotifyApi;
 import com.wrapper.spotify.SpotifyHttpManager;
-import com.wrapper.spotify.exceptions.SpotifyWebApiException;
-import com.wrapper.spotify.model_objects.credentials.ClientCredentials;
-import com.wrapper.spotify.requests.authorization.client_credentials.ClientCredentialsRequest;
-import com.wrapper.spotify.model_objects.credentials.AuthorizationCodeCredentials;
-import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
 import java.net.URI;
 import java.util.Scanner;
@@ -15,7 +10,7 @@ import java.io.IOException;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
-import data.*;
+import data.FilterOptions;
 
 /**
  * This code is all the spotify functions that are needed for the website
@@ -41,7 +36,8 @@ public class SpotifyUtils {
                 .setClientSecret(clientSecret)
                 .build();
 
-            URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:8080/playlistCreator");
+            String rawURI = "http://localhost:8080/playlistCreator";
+            URI redirectUri = SpotifyHttpManager.makeUri(rawURI);
             api = new SpotifyApi.Builder()
                 .setClientSecret(clientSecret)
                 .setClientId(clientId)
@@ -81,21 +77,28 @@ public class SpotifyUtils {
             int genreBefore = genres.size();
             int artistBefore = artists.size();
 
-            if (genres != null && fo.getGenre() != null)
+            if (genres != null && fo.getGenre() != null) {
                 genres.removeAll(fo.getGenre());
-            if (artists != null && fo.getArtist() != null)
+            }
+            if (artists != null && fo.getArtist() != null) {
                 artists.removeAll(fo.getArtist());
+            }
 
-            if ((genres != null && fo.getGenre() != null) && fo.getGenre().size() != 0 && genres.size() == genreBefore)
+            if ((genres != null && fo.getGenre() != null) && fo.getGenre().size() != 0 && genres.size() == genreBefore) {
                 continue;
-            if ((artists != null && fo.getArtist() != null) && fo.getArtist().size() != 0 && artists.size() == artistBefore)
+            }
+            if ((artists != null && fo.getArtist() != null) && fo.getArtist().size() != 0 && artists.size() == artistBefore) {
                 continue;
-            if (fo.getPopularityMin() != null && popularity < fo.getPopularityMin())
+            }
+            if (fo.getPopularityMin() != null && popularity < fo.getPopularityMin()) {
                 continue;
-            if (fo.getPopularityMax() != null && popularity > fo.getPopularityMax())
+            }
+            if (fo.getPopularityMax() != null && popularity > fo.getPopularityMax()) {
                 continue;
-            if (fo.getAlbum() != null && fo.getAlbum().size() != 0 && !fo.getAlbum().contains(album))
+            }
+            if (fo.getAlbum() != null && fo.getAlbum().size() != 0 && !fo.getAlbum().contains(album)) {
                 continue;
+            }
 
             playlist.add(current);
         }
@@ -111,8 +114,9 @@ public class SpotifyUtils {
         for (Song song : songs) {
             String[] curs = song.getGenres();
             for (String g : curs) {
-                if (!genres.contains(g))
+                if (!genres.contains(g)) {
                     genres.add(g);
+                }
             }
         }
         return genres;
@@ -126,8 +130,9 @@ public class SpotifyUtils {
         for (Song song : songs) {
             String[] art = song.getArtists();
             for (String a : art) {
-                if (!artists.contains(a))
+                if (!artists.contains(a)) {
                     artists.add(a);
+                }
             }
         }
         return artists;
@@ -140,8 +145,9 @@ public class SpotifyUtils {
         List<String> albums = new ArrayList<String>();
         for (Song song : songs) {
             String alb = song.getAlbum();
-            if (!albums.contains(alb))
+            if (!albums.contains(alb)) {
                 albums.add(alb);
+            }
         }
         return albums;
     }

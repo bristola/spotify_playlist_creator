@@ -16,20 +16,15 @@ import com.wrapper.spotify.model_objects.special.SnapshotResult;
 import com.wrapper.spotify.requests.data.playlists.AddTracksToPlaylistRequest;
 import com.wrapper.spotify.model_objects.credentials.AuthorizationCodeCredentials;
 import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeRequest;
-import com.wrapper.spotify.requests.authorization.authorization_code.AuthorizationCodeUriRequest;
 import com.wrapper.spotify.model_objects.specification.User;
 import com.wrapper.spotify.requests.data.users_profile.GetCurrentUsersProfileRequest;
 import com.wrapper.spotify.model_objects.specification.Playlist;
 import com.wrapper.spotify.requests.data.playlists.GetPlaylistRequest;
 import java.net.URI;
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Scanner;
-import data.*;
 
 /**
  * This class is an object which represents the current Spotify user which is
@@ -53,7 +48,8 @@ public class SpotifyUser {
     public SpotifyUser(String clientId, String clientSecret, String code) {
         this.clientId = clientId;
         this.clientSecret = clientSecret;
-        URI redirectUri = SpotifyHttpManager.makeUri("http://localhost:8080/playlistCreator");
+        String rawURI = "http://localhost:8080/playlistCreator";
+        URI redirectUri = SpotifyHttpManager.makeUri(rawURI);
         // Build api instance variable object using developer info.
         api = new SpotifyApi.Builder()
             .setClientSecret(clientSecret)
@@ -135,28 +131,28 @@ public class SpotifyUser {
             Paging<PlaylistTrack> playlistTrackPaging = getPlaylistsTracksRequest.execute();
             PlaylistTrack[] tracks = playlistTrackPaging.getItems();
 
-            List<Song> out_tracks = new ArrayList<Song>();
+            List<Song> outTracks = new ArrayList<Song>();
 
             for (int i = 0; i < tracks.length; i++) {
                 Track track = tracks[i].getTrack();
-                ArtistSimplified[] a_simp = track.getArtists();
-                String[] artists = new String[a_simp.length];
+                ArtistSimplified[] aSimp = track.getArtists();
+                String[] artists = new String[aSimp.length];
                 for (int j = 0; j < artists.length; j++) {
-                    artists[j] = a_simp[j].getName();
+                    artists[j] = aSimp[j].getName();
                 }
                 Song s = new Song(
                     track.getName(),
                     artists,
-                    getGenres(a_simp),
+                    getGenres(aSimp),
                     track.getId(),
                     track.getPopularity(),
                     track.getAlbum().getName(),
                     track.getUri()
                 );
-                out_tracks.add(s);
+                outTracks.add(s);
             }
 
-            return out_tracks;
+            return outTracks;
 
         } catch (IOException | SpotifyWebApiException e) {
             System.out.println("Error: " + e.getMessage());
@@ -183,9 +179,9 @@ public class SpotifyUser {
         for (Artist artist : a) {
             genres.addAll(Arrays.asList(artist.getGenres()));
         }
-        String[] genres_out = new String[genres.size()];
-        genres.toArray(genres_out);
-        return genres_out;
+        String[] genresOut = new String[genres.size()];
+        genres.toArray(genresOut);
+        return genresOut;
     }
 
     /*

@@ -15,7 +15,15 @@ public class Song {
     private final String album;
     private final String uri;
 
-    public Song(String name, String[] artists, String[] genres, String id, Integer popularity, String album, String uri) {
+    public Song(
+        String name,
+        String[] artists,
+        String[] genres,
+        String id,
+        Integer popularity,
+        String album,
+        String uri
+    ) {
         this.name = name;
         this.artists = artists;
         this.genres = genres;
@@ -65,11 +73,13 @@ public class Song {
         out = out + "\n\t" + album;
         out = out + "\n\t" + popularity;
         out = out + "\n\tArtists:\n";
-        for (String artist : artists)
+        for (String artist : artists) {
             out = out + "\t\t" + artist;
+        }
         out = out + "\n\tGenres:\n";
-        for (String genre : genres)
+        for (String genre : genres) {
             out = out + "\t\t" + genre;
+        }
         return out;
     }
 

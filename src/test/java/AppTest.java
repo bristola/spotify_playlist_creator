@@ -2,11 +2,11 @@
     JUnit test suite for application
 **/
 import org.junit.Test;
-import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
-import spotify.*;
-import data.*;
+import spotify.SpotifyUtils;
+import spotify.Song;
+import data.FilterOptions;
 
 public class AppTest {
 
@@ -55,11 +55,11 @@ public class AppTest {
         SpotifyUtils su = new SpotifyUtils();
         List<Song> result = su.filterSongs(songs, fo);
 
-        if (result.contains(s1) && result.contains(s2) && !result.contains(s3) && !result.contains(s4))
+        if (result.contains(s1) && result.contains(s2) && !result.contains(s3) && !result.contains(s4)) {
             assert true;
-        else
+        } else {
             assert false;
-
+        }
     }
 
 }
