@@ -186,21 +186,4 @@ public class SpotifyUtils {
         return "";
     }
 
-    /*
-        Gets the developer user ID from a file.
-    */
-    public String getUserID() throws IOException {
-        File f = new File("spotify_settings.txt");
-        Scanner scan = new Scanner(f);
-        while (scan.hasNext()) {
-            String[] lineArray = scan.nextLine().split(":");
-            if (lineArray.length != 2) {
-                continue;
-            } else if (lineArray[0].toLowerCase().trim().equals("spotify id")) {
-                return lineArray[1].trim();
-            }
-        }
-        return "";
-    }
-
 }

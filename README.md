@@ -33,6 +33,13 @@ For this project, a few different technologies were used:
 
 1. ```cd spotify_playlist_creator```
 
+1. Create file called *spotify_settings.txt* in the following format:
+
+    ```
+    Client ID: <Your Client ID>
+    Client Secret: <Your Client Secret>
+    ```
+
 1. ```gradle build```
 
 1. ```java -jar build/libs/gs-spring-boot-0.1.0.jar```
