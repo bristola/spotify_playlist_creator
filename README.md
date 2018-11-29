@@ -8,12 +8,13 @@
 
 This project is a website which allows the user to sign in to their spotify
 account and do various actions. Namely, the user can select a playlist they
-would like to add songs from. Then, they select the types of genres, artists,
-albums, and popularity you want the songs to be. Then, it will take all the
-songs from the playlist that meet the specified criteria and adds them to a user
-specified playlist. This allows users to rapidly add many songs to a playlist by
-filtering out songs they don't want. When manually done, it would take a very
-long time. But, this operation is instantaneous.
+would like to add songs from and collect information from it. Then, you can
+select the types of genres, artists, albums, and popularity you want the songs
+to be. It will take all the songs from the playlist that meet the specified
+criteria and adds them to a user picked playlist. This allows users to rapidly
+add many songs to a playlist by filtering out songs they don't want. When
+manually done, it would take a very long time, but this operation is
+instantaneous.
 
 ## Technology
 
