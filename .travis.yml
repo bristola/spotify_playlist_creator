@@ -7,3 +7,4 @@ before_install:
 
 script:
   - mdl README.md -c .mdlrc
+  - gradle check
