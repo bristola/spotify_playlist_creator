@@ -27,6 +27,12 @@ For this project, a few different technologies were used:
 
     Used to connect to Spotify and make requests.
 
+## Requirements
+
+1. [Java](https://gradle.org/releases/)
+
+1. [Gradle](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+
 ## How to run
 
 1. ```git clone git@github.com:bristola/spotify_playlist_creator.git```
