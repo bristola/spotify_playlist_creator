@@ -413,8 +413,4 @@ public class AppTest {
         }
     }
 
-    @Test public void testTest() {
-        assert false;
-    }
-
 }
