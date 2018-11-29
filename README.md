@@ -33,6 +33,16 @@ For this project, a few different technologies were used:
 
 1. [Gradle](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
+1. You must create your own Spotify Client ID and Client Secret:
+
+    1. First go to <https://developer.spotify.com/dashboard/>
+
+    1. Click log in and use your Spotify account details.
+
+    1. Create a new App.
+
+    1. Once you are in the App's details, save both the ID and the Secret.
+
 ## How to run
 
 1. ```git clone git@github.com:bristola/spotify_playlist_creator.git```
