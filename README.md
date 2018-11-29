@@ -29,11 +29,11 @@ For this project, a few different technologies were used:
 
 ## Requirements
 
-1. [Java](https://gradle.org/releases/)
+1. Install [Java](https://gradle.org/releases/)
 
-1. [Gradle](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+1. Install [Gradle](https://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 
-1. You must create your own Spotify Client ID and Client Secret:
+1. Create your own Spotify Client ID and Client Secret:
 
     1. First go to <https://developer.spotify.com/dashboard/>
 
